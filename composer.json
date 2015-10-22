@@ -10,12 +10,11 @@
 		"issues": "https://github.com/thiagodp/session/issues",
 		"source": "https://github.com/thiagodp/session"
 	},
-	"minimum-stability": "dev",
 	"require": {
 		"php": ">=5.2.0"
 	},
 	"require-dev": {
-    },	
+	},
 	"suggest": {
 	},
 	"autoload": {
