@@ -19,6 +19,6 @@
 	"suggest": {
 	},
 	"autoload": {
-		"classmap": [ "lib/" ]
+		"psr-4": { "phputil\\": "lib/" }
 	}
 }
