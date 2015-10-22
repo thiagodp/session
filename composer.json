@@ -1,0 +1,24 @@
+{
+	"name": "phputil/session",
+	"type": "library",
+	"description": "A simple object-oriented wrapper to PHP's session functions.",
+	"keywords": [ "session", "cookie", "php" ],
+	"homepage": "http://github.com/thiagodp/session",
+	"license": "LGPL-3",
+	"authors": [ { "name": "Thiago Delgado Pinto" } ],
+	"support": {
+		"issues": "https://github.com/thiagodp/session/issues",
+		"source": "https://github.com/thiagodp/session"
+	},
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.2.0"
+	},
+	"require-dev": {
+    },	
+	"suggest": {
+	},
+	"autoload": {
+		"classmap": [ "lib/" ]
+	}
+}
