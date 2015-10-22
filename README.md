@@ -59,7 +59,7 @@ $session->start();
 
 ### Example 4
 
-Regerating the session id.
+Regenerating the session id.
 
 ```php
 $session = new phputil\Session();
