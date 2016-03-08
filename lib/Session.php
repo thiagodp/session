@@ -126,6 +126,7 @@ class Session {
 	 *  @return mixed
 	 */
 	function get( $key ) {
+		if ( ! isset( $_SESSION ) ) { return null; }
 		return array_key_exists( $key, $_SESSION ) ? $_SESSION[ $key ] : null;
 	}
 	
@@ -140,6 +141,7 @@ class Session {
 	 *  @return Session				The class instance (this).
 	 */
 	function set( $key, $value ) {
+		if ( ! isset( $_SESSION ) ) { return $this; }
 		$_SESSION[ $key ] = $value;
 		return $this;
 	}
@@ -171,6 +173,7 @@ class Session {
 	 *  @return bool
 	 */
 	function has( $key ) {
+		if ( ! isset( $_SESSION ) ) { return false; }
 		return array_key_exists( $key, $_SESSION );
 	}
 	
@@ -182,6 +185,7 @@ class Session {
 	 *  @return bool
 	 */
 	function remove( $key ) {
+		if ( ! isset( $_SESSION ) ) { return false; }
 		if ( array_key_exists( $key, $_SESSION ) ) {
 			unset( $_SESSION[ $key ] );
 			return true;
@@ -193,6 +197,7 @@ class Session {
 	 *  Clear the session data.
 	 */
 	function clear() {
+		if ( ! isset( $_SESSION ) ) { return; }
 		session_unset();
 		$_SESSION = array();
 	}	
