@@ -2,9 +2,9 @@
 
 PHP's session in a object-oriented version.
 
-Classes: 
-* [phputil\Session](https://github.com/thiagodp/session/blob/master/lib/Session.php)
-* [phputil\FileBasedSession](https://github.com/thiagodp/session/blob/master/lib/FileBasedSession.php)
+Main files: 
+* Interface [phputil\Session](https://github.com/thiagodp/session/blob/master/lib/Session.php)
+* Class [phputil\FileBasedSession](https://github.com/thiagodp/session/blob/master/lib/FileBasedSession.php)
 
 This project uses [semantic versioning](http://semver.org/).
 
