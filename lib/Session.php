@@ -2,32 +2,15 @@
 namespace phputil;
 
 /**
- * A simple object-oriented wrapper to PHP's session functions.
+ * Server session.
  *
  * @author	Thiago Delgado Pinto
  */
-class Session {
+interface Session {
 	
-	// STATE __________________________________________________________________
-	
-	/**
-	 *  Return {@code true} if a session exists.
-	 *  
-	 *  @return bool
-	 */
-	function exists() {
-		return PHP_SESSION_ACTIVE == $this->status();
-	}
-	
-	/**
-	 *  Return {@code true} if sessions are enabled.
-	 *  
-	 *  @return bool
-	 */
-	function enabled() {
-		$status = $this->status();
-		return PHP_SESSION_ACTIVE == $status || PHP_SESSION_NONE == $status;
-	}
+	//
+	// STATE
+	//
 
 	/**
 	 *  Return session status, according to the server configuration and current state:
@@ -38,28 +21,42 @@ class Session {
 	 *  
 	 *  @return int
 	 */
-	function status() {
-		return session_status();
-	}
+	function status();
 	
+	/**
+	 *  Return {@code true} if status is PHP_SESSION_ACTIVE.
+	 *  
+	 *  @return bool
+	 */
+	function statusIsActive();
+	
+	/**
+	 *  Return {@code true} if status is PHP_SESSION_NONE.
+	 *  
+	 *  @return bool
+	 */
+	function statusIsNone();
+	
+	/**
+	 *  Return {@code true} if status is PHP_SESSION_DISABLED.
+	 *  
+	 *  @return bool
+	 */
+	function statusIsDisabled();
 	
 	/**
 	 *  Start new or resume existing session.
 	 *  
 	 *  @return  bool
 	 */
-	function start() {
-		return session_start();
-	}
+	function start();
 	
 	/**
 	 *  Return the current session id.
 	 *  
 	 *  @return string
 	 */
-	function id() {
-		return session_id();
-	}
+	function id();
 	
 	/**
 	 *  Set the current session id. Should be called BEFORE start().
@@ -67,18 +64,14 @@ class Session {
 	 *  @param	string $newId	The new id. Allowed characters are: [a-zA-Z,-]
 	 *  @return string			The name of the current session.
 	 */
-	function setId( $newId ) {
-		return session_id( $newId );
-	}
+	function setId( $newId );
 	
 	/**
 	 *  Return the current session name. It is used in cookies and URLs (e.g. PHPSESSID).
 	 *  
 	 *  @return string
 	 */
-	function name() {
-		return session_name();
-	}
+	function name();
 	
 	/**
 	 *  Set the current session name. Should be called BEFORE start().
@@ -86,9 +79,7 @@ class Session {
 	 *  @param	string $newId	The new id. Allowed characters are: [a-zA-Z-0-9]
 	 *  @return string			The name of the current session.
 	 */
-	function setName( $newName ) {
-		return session_name( $newName );
-	}	
+	function setName( $newName );
 	
 	/**
 	 *  Update the current session id with a newly generated one.
@@ -96,16 +87,12 @@ class Session {
 	 *  @param	bool $deleteOldSession	Whether to delete the old associated session file or not.
 	 *  @return	bool
 	 */
-	function regenerateId( $deleteOldSession = false ) {
-		return session_regenerate_id( $deleteOldSession );
-	}
+	function regenerateId( $deleteOldSession = false );
 	
 	/**
 	 *  Close the session with the current data.
 	 */
-	function close() {
-		session_write_close();
-	}
+	function close();
 	
 	/**
 	 *  Destroys all of the data associated with the current session. It does not unset
@@ -113,11 +100,11 @@ class Session {
 	 *  
 	 *  @return bool
 	 */
-	function destroy() {
-		return session_destroy();
-	}
+	function destroy();
 	
-	// DATA ___________________________________________________________________
+	//
+	// DATA
+	//
 	
 	/**
 	 *  Return the value of a given key of null if it doesn't exist.
@@ -125,10 +112,7 @@ class Session {
 	 *  @param int|string $key	The key of the value.
 	 *  @return mixed
 	 */
-	function get( $key ) {
-		if ( ! isset( $_SESSION ) ) { return null; }
-		return array_key_exists( $key, $_SESSION ) ? $_SESSION[ $key ] : null;
-	}
+	function get( $key );
 	
 	/**
 	 *  Set the value for a given key. Return the current session instance
@@ -140,18 +124,12 @@ class Session {
 	 *  @param mixed		$value	The value to be set.
 	 *  @return Session				The class instance (this).
 	 */
-	function set( $key, $value ) {
-		if ( ! isset( $_SESSION ) ) { return $this; }
-		$_SESSION[ $key ] = $value;
-		return $this;
-	}
+	function set( $key, $value );
 	
 	/**
 	 *  Same as #set.
 	 */
-	function put( $key, $value ) {
-		return $this->set( $key, $value );
-	}
+	function put( $key, $value );
 	
 	/**
 	 *  Set all the array keys and values in the session. This method is chainable.
@@ -159,12 +137,7 @@ class Session {
 	 *  @param array $array	Keys and the corresponding values.
 	 *  @return Session		The class instance (this).
 	 */
-	function putAll( array $array ) {
-		foreach ( $array as $key => $value ) {
-			$this->set( $key, $value );
-		}
-		return $this;
-	}
+	function putAll( array $array );
 	
 	/**
 	 *  Return true whether the session holds the given key.
@@ -172,11 +145,7 @@ class Session {
 	 *  @param int|string $key	The key to be checked.
 	 *  @return bool
 	 */
-	function has( $key ) {
-		if ( ! isset( $_SESSION ) ) { return false; }
-		return array_key_exists( $key, $_SESSION );
-	}
-	
+	function has( $key );
 	
 	/**
 	 *  Remove a given key from the session.
@@ -184,34 +153,23 @@ class Session {
 	 *  @param int|string $key	The key to be removed.
 	 *  @return bool
 	 */
-	function remove( $key ) {
-		if ( ! isset( $_SESSION ) ) { return false; }
-		if ( array_key_exists( $key, $_SESSION ) ) {
-			unset( $_SESSION[ $key ] );
-			return true;
-		}
-		return false;
-	}
+	function remove( $key );
 	
 	/**
 	 *  Clear the session data.
 	 */
-	function clear() {
-		if ( ! isset( $_SESSION ) ) { return; }
-		session_unset();
-		$_SESSION = array();
-	}	
+	function clear();
 	
-	// COOKIE _________________________________________________________________
+	//
+	// COOKIES
+	//
 	
 	/**
 	 *  Return {@code true} whether the session use cookies.
 	 *  
 	 *  @return bool
 	 */
-	function useCookies() {
-		return ini_get( 'session.use_cookies' );
-	}
+	function useCookies();
 	
 	/**
 	 *  Return an array with the cookie parameters:
@@ -224,9 +182,7 @@ class Session {
 	 *  
 	 *  @return array
 	 */
-	function cookieParams() {
-		return session_get_cookie_params();
-	}
+	function cookieParams();
 	
 	/**
 	 *  Set the session cookie parameters, defined in the php.ini file.
@@ -248,32 +204,13 @@ class Session {
 	 *  							flag when setting the session cookie.
 	 *  
 	 */
-	function setCookieParams( $lifetime, $path = '/', $domain = '', $secure = false, $httponly = false ) {
-		session_set_cookie_params( $lifetime, $path, $domain, $secure, $httponly );
-	}
-	
+	function setCookieParams( $lifetime, $path = '/', $domain = '', $secure = false, $httponly = false );
 	
 	/**
 	 *  Destroy the session cookie.
 	 *  
 	 *  @return bool
 	 */
-	function destroyCookie() {
-		if ( ! $this->useCookies() ) {
-			return false;
-		}
-		
-		$value = ''; // empty, but it doesn't matter
-		$expiration = time() - 12960000; // a time in the past. that's the point.
-		$params = $this->cookieParams();
-		
-		return setcookie( $this->name(), $value, $expiration,
-			$params[ 'path' ],
-			$params[ 'domain' ],
-			$params[ 'secure' ],
-			$params[ 'httponly' ]
-			);
-	}
-	
+	function destroyCookie();
 }
 ?>
