@@ -1,11 +1,12 @@
 # Session
 
-An object-oriented wrapper to PHP's session functions.
-
-Current [version](http://semver.org/): `1.0` (stable, used in production code)
+PHP's session in a object-oriented version.
 
 Classes: 
 * [phputil\Session](https://github.com/thiagodp/session/blob/master/lib/Session.php)
+* [phputil\Session](https://github.com/thiagodp/session/blob/master/lib/FileBasedSession.php)
+
+This project uses [semantic versioning](http://semver.org/).
 
 ### Installation
 
@@ -18,7 +19,7 @@ composer require phputil/session
 Setting and getting a value from the session.
 
 ```php
-$session = new phputil\Session();
+$session = new phputil\FileBasedSession();
 $session->start();
 
 $session->put( 'user_name', $_POST[ 'user_name' ] ); // Set a value in the session
@@ -30,7 +31,7 @@ echo 'Hello, ', $session->get( 'user_name' ); // Get a value from the session
 Setting session cookie name and cookie duration.
 
 ```php
-$session = new phputil\Session();
+$session = new phputil\FileBasedSession();
 $session->setName( 'myapp' ); // (optional) "PHPSESSID" session cookie key becomes "myapp"
 $session->setCookieParams( $lastOneDay = 60 * 60 * 24 ); // (optional) cookie will last one day
 $session->start();
@@ -41,7 +42,8 @@ $session->start();
 Swapping between sessions.
 
 ```php
-$session = new phputil\Session();
+$session = new phputil\FileBasedSession();
+
 $session->start();
 $savedId = $session->id();
 $session->close();
@@ -62,7 +64,7 @@ $session->start();
 Regenerating the session id.
 
 ```php
-$session = new phputil\Session();
+$session = new phputil\FileBasedSession();
 $session->start();
 $session->regenerateId( true ); // true means delete the old file
 ```
@@ -72,7 +74,7 @@ $session->regenerateId( true ); // true means delete the old file
 Destroying the session.
 
 ```php
-$session = new phputil\Session();
+$session = new phputil\FileBasedSession();
 $session->start();
 $session->destroy();
 ```
