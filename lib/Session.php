@@ -107,12 +107,20 @@ interface Session {
 	//
 	
 	/**
-	 *  Return the value of a given key of null if it doesn't exist.
+	 *  Return the value of a given key of null if it does not exist.
 	 *  
 	 *  @param int|string $key	The key of the value.
 	 *  @return mixed
 	 */
 	function get( $key );
+	
+	/**
+	 *  Return all the values as an array, or an empty array if the
+	 *  session does not exist.
+	 *  
+	 *  @return array
+	 */
+	function getAll();
 	
 	/**
 	 *  Set the value for a given key. Return the current session instance

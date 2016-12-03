@@ -83,6 +83,11 @@ class FileBasedSession implements Session {
 	}
 	
 	/** @inheritDoc */
+	function getAll() {
+		return isset( $_SESSION ) ? $_SESSION : array();
+	}
+	
+	/** @inheritDoc */
 	function set( $key, $value ) {
 		if ( ! isset( $_SESSION ) ) { return $this; }
 		$_SESSION[ $key ] = $value;
