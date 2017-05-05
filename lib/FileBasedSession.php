@@ -59,7 +59,7 @@ class FileBasedSession implements Session {
 	
 	/** @inheritDoc */
 	function regenerateId( $deleteOldSession = false ) {
-		return session_regenerate_id( $deleteOldSession );
+		return @session_regenerate_id( $deleteOldSession );
 	}
 	
 	/** @inheritDoc */
