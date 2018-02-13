@@ -4,7 +4,7 @@
 	"description": "A simple object-oriented wrapper to PHP's session functions.",
 	"keywords": [ "session", "cookie", "php" ],
 	"homepage": "http://github.com/thiagodp/session",
-	"license": "LGPL-3",
+	"license": "LGPL-3.0-or-later",
 	"authors": [ { "name": "Thiago Delgado Pinto" } ],
 	"support": {
 		"issues": "https://github.com/thiagodp/session/issues",
